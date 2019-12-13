@@ -1,0 +1,28 @@
+{
+  "model_config": {
+    "model_name": "ssd_resnet_50_fpn_coco",
+    "input_dir": "/models/object_detection/combined_nms_enabled",
+    "batch_size": 8,
+    "override_nms_score_threshold": 0.3
+  },
+  "optimization_config": {
+    "use_trt": true,
+    "precision_mode": "INT8",
+    "calib_images_dir": "/media/NAS/PeopleDetection/tensorflow/datasets/sharp_dataset_v0/images/test",
+    "num_calib_images": 8,
+    "calib_batch_size": 8,
+    "calib_image_shape": [480, 848],
+    "max_workspace_size_bytes": 17179869184
+  },
+  "benchmark_config": {
+    "images_dir": "/media/NAS/PeopleDetection/tensorflow/datasets/sharp_dataset_v0/images/test",
+    "annotation_path": "/data/coco2017/annotations/instances_val2017.json",
+    "batch_size": 8,
+    "image_shape": [640, 640],
+    "num_images": 4096,
+    "output_path": "stats/ssd_resnet_50_fpn_coco_trt_int8.json"
+  },
+  "assertions": [
+    "statistics['map'] > (0.277 - 0.01)"
+  ]
+}

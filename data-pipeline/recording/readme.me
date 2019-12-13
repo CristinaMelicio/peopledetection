@@ -1,0 +1,11 @@
+SSH Tunel : To open sublime remotely - ssh -R 52698:localhost:52698 up@10.154.1.48
+
+To record bag files from the cameras:
+
+1) Login up squared: ssh up@10.154.1.48 / Pass: InovUp
+2) Activate anaconda env.: conda activate pyrealsense
+3) Go to the directory peopledetection/data-pipeline/recording
+4.1) Run python record_bot.py (record just one bag file)
+4.2) Run python record_bag_bot.py (record several bag files in specific rush hours)
+
+

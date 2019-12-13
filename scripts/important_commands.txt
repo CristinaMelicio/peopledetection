@@ -1,0 +1,29 @@
+Important commands
+
+** To use models/research **
+go to models/research
+$ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+
+** Train a model **
+$ python3 object_detection/model_main.py \
+--model_dir=/media/nas/PeopleDetection/tensorflow/trainings/ssd_mobilenet_train_blurry \
+--pipeline_config_path==/media/nas/PeopleDetection/tensorflow/trainings/ssd_mobilenet_train_blurry/ssd_mobilenet_v1_fpn_shared_box_predictor_640x640_coco14_sync.config
+
+** Export inference graph from trained model **
+$ python3 object_detection/export_inference_graph.py \
+--input_type=image_tensor \
+--pipeline_config_path=/media/nas/PeopleDetection/tensorflow/trainings/ssd_mobilenet_train_blurry/ssd_mobilenet_v1_fpn_shared_box_predictor_640x640_coco14_sync.config \
+--trained_checkpoint_prefix=/media/nas/PeopleDetection/tensorflow/trainings/ssd_mobilenet_train_blurry/model.ckpt-25000 \
+--output_directory=/media/nas/PeopleDetection/tensorflow/models_trained/ssd_mobilenet_trained_blurry_model/
+
+** Generate inference tfrecord **
+$ python3 object_detection/inference/infer_detections.py \
+--input_tfrecord_paths=/media/nas/PeopleDetection/tensorflow/blurry_dataset/eval_data/eval.record \
+--output_tfrecord_path=/media/nas/PeopleDetection/tensorflow/inferences/ssd_mobilenet_v1_blurry_eval \
+--inference_graph=/media/nas/PeopleDetection/tensorflow/models_trained/ssd_mobilenet_trained_blurry_model/frozen_inference_graph.pb 
+
+** Generate metrics.csv **
+$ python3 object_detection/metrics/offline_eval_map_corloc.py \
+--eval_dir=/media/nas/PeopleDetection/tensorflow/metrics/ssd_mobilenet_v1_trained_blurry_eval_metrics/ \
+--eval_config_path=/media/nas/PeopleDetection/tensorflow/metrics/ssd_mobilenet_v1_trained_blurry_eval_metrics/eval_config.pbtxt \
+--input_config_path=/media/nas/PeopleDetection/tensorflow/metrics/ssd_mobilenet_v1_trained_blurry_eval_metrics/input_config.pbtxt 
